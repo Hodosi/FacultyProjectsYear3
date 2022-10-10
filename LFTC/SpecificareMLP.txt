@@ -1,0 +1,53 @@
+GIC
+
+<program> -> <lista_librarii><clasa>
+
+<lista_librarii> -> <librarie> | <librarie><lista_librarii>
+<clasa> -> <antet_clasa><corp_clasa>
+
+<librarie> -> import ID;
+<antet_clasa> -> <modificator de acces> class ID
+<corp_clasa> -> { <lista_metode> }
+
+<lista_metode> -> <metoda> | <metoda><lista_metode>
+
+<metoda> -> <antet_metoda><instructiune_compusa>
+
+<antet_metoda> -> <modificato_ de_acces> <tip_metoda> <tip_return> ID( <lista_parametrii_de_intrare> )
+<instructiune_compusa> -> { <lista_de_instructiuni> }
+
+<modificator_de_acces> -> public | protected | private
+<tip_metoda> -> static | abstract | final | Epsilon
+<tip_return> -> <tip> | void
+<lista_parametrii_de_intrare> -> <parametru_de_intrare> | <parametru_de_intrare>,<lista_parametrii_de_intrare>
+
+<tip> -> int | double | String
+<parametru_de_intrare> -> <tip> ID
+<lista_instructiuni> -> <instructiune> | <instructiune><lista_instructiuni>
+
+<instructiune> -> <declarare> | <citire> | <atribuire> | <ciclare> | <afisare> | <incrementare> | <decrementare> | <returnare>
+
+<declarare> -> <modificator_de_stare><tip><lista_id>;
+<modificator_de_stare> -> final | Epsilon
+<lista_id> -> ID | ID,<lista_id>
+
+<citire> -> ID = ID.<metoda_scanner>;
+<metoda_scanner> -> nextInt() | nextDouble() | nextLine()
+
+<atribuire> -> ID = <expresie>;
+<expresie> -> CONST | <expresie_aritmetica>
+<expresie_aritmetica> -> <adunare> | <scadere> | <inmultire> | <impartire> | <impartire_cu_rest>
+<adunarea> = ID + ID | ID + CONST | CONST + ID | CONST + CONST
+<scadere> = ID - ID | ID - CONST | CONST - ID | CONST - CONST
+<inmultire> = ID * ID | ID * CONST | CONST * ID | CONST * CONST
+<impartire> = ID / ID | ID / CONST | CONST / ID | CONST / CONST
+<impartire_cu_rest> = ID % ID | ID % CONST | CONST % ID |CONST % CONST
+
+<incrementare> -> ID++;
+<decrementare> -> ID--;
+
+<ciclare> -> while(<conditie>)<instructiune_compusa>
+
+<afisare> -> System.out.println(ID); | System.out.println(CONST);
+
+<returnare> -> return ID; | return CONST;

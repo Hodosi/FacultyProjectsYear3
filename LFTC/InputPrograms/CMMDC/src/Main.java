@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final Scanner IN = new Scanner(System.in);
+        final Scanner IN;
+        IN = new Scanner(System.in);
         int a, b, r;
         a = IN.nextInt();
         b = IN.nextInt();

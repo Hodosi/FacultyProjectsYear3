@@ -2,12 +2,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final Scanner IN = new Scanner(System.in);
-        final int N = IN.nextInt();
-        double i, x, sum = 0;
-        for(i = 0; i < N; i++){
+        final Scanner IN;
+        IN = new Scanner(System.in);
+        double N, i, x, sum;
+        sum = 0;
+        N = IN.nextInt();
+        i = 0;
+        while (i < N) {
             x = IN.nextDouble();
             sum = sum + x;
+            i++;
         }
         System.out.println(sum);
     }
