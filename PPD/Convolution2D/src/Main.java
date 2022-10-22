@@ -70,8 +70,8 @@ public class Main {
             rest = N % p;
         } else {
             linEnd = N;
-            chunk = N / p;
-            rest = N % p;
+            chunk = M / p;
+            rest = M % p;
         }
 
         for (int i = 0; i < p; i++) {

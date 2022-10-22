@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class CreateMatrix {
     private static final String INPUT_FILES_PATH = "./src/resources/input/";
-    private static final String FILENAME = "matrix10000pe10.txt";
-    private static final int N = 10000;
-    private static final int M = 10;
+    private static final String FILENAME = "matrix10pe10000.txt";
+    private static final int N = 10;
+    private static final int M = 10000;
 
     public static void main(String[] args) {
         final String filePath = INPUT_FILES_PATH + FILENAME;
