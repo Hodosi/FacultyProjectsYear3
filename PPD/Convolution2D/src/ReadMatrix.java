@@ -20,6 +20,5 @@ public class ReadMatrix {
             e.printStackTrace();
             return null;
         }
-
     }
 }
