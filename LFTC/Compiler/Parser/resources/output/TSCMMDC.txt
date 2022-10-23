@@ -1,0 +1,7 @@
+0				0
+Main				1
+a				2
+args				3
+b				4
+main				5
+r				6

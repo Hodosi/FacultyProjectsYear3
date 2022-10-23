@@ -2,11 +2,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final Scanner IN;
-        IN = new Scanner(System.in);
         int a, b, r;
-        a = IN.nextInt();
-        b = IN.nextInt();
+        a = new Scanner(System.in).nextInt();
+        b = new Scanner(System.in).nextInt();
         while (b != 0) {
             r = a % b;
             a = b;

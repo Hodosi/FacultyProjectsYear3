@@ -1,3 +1,0 @@
-./Parser/resources/inputPrograms/Cerc.txt
-./Parser/resources/inputPrograms/CMMDC.txt
-./Parser/resources/inputPrograms/SumN.txt

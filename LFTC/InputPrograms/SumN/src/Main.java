@@ -2,14 +2,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final Scanner IN;
-        IN = new Scanner(System.in);
         double N, i, x, sum;
         sum = 0;
-        N = IN.nextInt();
+        N = new Scanner(System.in).nextInt();
         i = 0;
         while (i < N) {
-            x = IN.nextDouble();
+            x = new Scanner(System.in).nextDouble();
             sum = sum + x;
             i++;
         }

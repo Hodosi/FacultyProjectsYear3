@@ -1,70 +1,27 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
 
 public class Service {
-    private final String INPUT_FILES_PATH = "./Parser/resources/inputPrograms/inputFilesPath.txt";
-    private final String OUTPUT_FILES_PATH = "./Parser/resources/parseOutput/";
+    private final String INPUT_FILES_PATH = "./Parser/resources/input/inputFilesPath.txt";
+    private final String OUTPUT_FILES_PATH = "./Parser/resources/output/";
     private final String SEPARATORS_FILES_PATH = "./Parser/resources/lexicalItems/separators.txt";
-    private String currentFileContent = "";
-    private ArrayList<String> parsedFileContent;
-    private ArrayList<String> separators;
+    private final String TA_FILE_PATH = "./Parser/resources/tables/TA.txt";
 
     public void run() {
-        this.separators = ReaderFromFile.loadInputLinesToArrayList(SEPARATORS_FILES_PATH);
-        final ArrayList<String> inputFilesPathList = ReaderFromFile.loadInputLinesToArrayList(INPUT_FILES_PATH);
+        final ArrayList<String> separators = FileRead.loadInputLinesToArrayList(SEPARATORS_FILES_PATH);
+        final ArrayList<String> inputFilesPathList = FileRead.loadInputLinesToArrayList(INPUT_FILES_PATH);
+        final TA ta = new TA(TA_FILE_PATH);
 
         for (String filePath : inputFilesPathList) {
-            this.currentFileContent = ReaderFromFile.readFile(filePath);
-            this.parse();
-            String outputFilePath = this.getOutputPath(filePath);
-            WriterToFile.writeArrayListToLines(outputFilePath, this.parsedFileContent);
+            final String currentFileContent = FileRead.readFile(filePath);
+            final Parser parser = new Parser(currentFileContent, separators);
+            final ArrayList<String> programAtoms = parser.parse();
+            final String filename = Utils.getFilename(filePath);
+            FileWrite.writeArrayListToLines(OUTPUT_FILES_PATH + filename, programAtoms);
+
+            final FIP fip = new FIP(programAtoms, ta);
+            fip.saveOnDisk(OUTPUT_FILES_PATH + "FIP" + filename);
+            final TS ts = fip.getTS();
+            ts.saveOnDisk(OUTPUT_FILES_PATH + "TS" + filename);
         }
-    }
-
-    private void parse() {
-        this.parsedFileContent = new ArrayList<>();
-        final String[] parsedBySpaces = this.currentFileContent.split("[ \n]+");
-        for (String item : parsedBySpaces) {
-            processItem(item);
-        }
-    }
-
-    private void processItem(String currentItem) {
-        Optional<String> optional;
-        String atom, separator;
-        int indexSeparator;
-
-        separator = " ";
-        indexSeparator = -1;
-        while (indexSeparator + separator.length() < currentItem.length()) {
-            currentItem = currentItem.substring(indexSeparator + separator.length());
-            atom = currentItem;
-            indexSeparator = -1;
-
-            optional = this.separators.stream().filter(atom::contains).findFirst();
-            while (optional.isPresent()) {
-                separator = optional.get();
-                indexSeparator = atom.indexOf(separator);
-                atom = atom.substring(0, indexSeparator);
-                optional = this.separators.stream().filter(atom::contains).findFirst();
-            }
-
-            if (indexSeparator == -1) {
-                this.parsedFileContent.add(atom);
-                break;
-            }
-
-            if (indexSeparator > 0) {
-                this.parsedFileContent.add(atom);
-            }
-
-            this.parsedFileContent.add(separator);
-        }
-    }
-
-    private String getOutputPath(String inputPath) {
-        final String[] pathParts = inputPath.split("/");
-        return OUTPUT_FILES_PATH + pathParts[pathParts.length - 1];
     }
 }
