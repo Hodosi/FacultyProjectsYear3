@@ -8,8 +8,11 @@ public class TS {
 
     private ArrayList<NodeTS> nodesInorder;
 
+    private boolean needRefresh;
+
     public TS() {
         root = null;
+        needRefresh = false;
     }
 
     public void saveOnDisk(String filePath) {
@@ -31,6 +34,7 @@ public class TS {
 
     // This method mainly calls insertRec()
     public void insert(String key) {
+        needRefresh = true;
         root = insertRec(root, key);
     }
 
@@ -58,10 +62,25 @@ public class TS {
     private int position;
 
     public ArrayList<NodeTS> getNodesInorder() {
+        if (needRefresh) {
+            refresh();
+        }
+        return nodesInorder;
+    }
+
+    public NodeTS findByCode(int code) {
+        if (needRefresh) {
+            refresh();
+        }
+
+        return nodesInorder.get(code);
+    }
+
+    private void refresh(){
         nodesInorder = new ArrayList<>();
         this.position = 0;
         inorderRec(root);
-        return nodesInorder;
+        needRefresh = false;
     }
 
     private void inorderRec(NodeTS root) {

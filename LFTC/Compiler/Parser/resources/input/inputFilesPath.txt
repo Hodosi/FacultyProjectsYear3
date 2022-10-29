@@ -1,3 +1,4 @@
 ./Parser/resources/input/Cerc.txt
 ./Parser/resources/input/CMMDC.txt
 ./Parser/resources/input/SumN.txt
+./Parser/resources/input/ErrorLP.txt

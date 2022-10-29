@@ -17,13 +17,10 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/.vscode/*
-!/.vscode/extensions.json
-.idea
+.vscode
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Optional eslint cache
-.eslintcache
+.idea

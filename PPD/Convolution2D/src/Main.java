@@ -1,4 +1,4 @@
-public class Main {
+public class Main extends Utils {
     //        private static final String INPUT_FILES_PATH = "./src/resources/input/";
     private static final String INPUT_FILES_PATH = "resources/input/";
     //        private static final String OUTPUT_FILES_PATH = "./src/resources/output/";
@@ -102,7 +102,6 @@ public class Main {
         for (int i = 0; i < p; i++) {
             threads[i].join();
         }
-
     }
 
     private static void testResult() {

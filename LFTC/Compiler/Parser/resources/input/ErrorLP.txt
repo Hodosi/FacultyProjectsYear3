@@ -1,8 +1,10 @@
 public class Main {
    public static void main(String[] args) {
+       int 1a1;
        a = 1;
        while ( a > 0) {
            System.out.println(a);
        a--;
+       }
    }
 }
