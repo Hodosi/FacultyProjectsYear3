@@ -1,0 +1,3 @@
+C:/UserDisk/FacultyProjectsYear3/PPD/Convolution2Dcpp/cmake-build-debug/CMakeFiles/Convolution2Dcpp.dir
+C:/UserDisk/FacultyProjectsYear3/PPD/Convolution2Dcpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/UserDisk/FacultyProjectsYear3/PPD/Convolution2Dcpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir

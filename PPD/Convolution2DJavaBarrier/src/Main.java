@@ -1,11 +1,12 @@
-import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+import static java.lang.Math.abs;
+
 public class Main extends Utils {
-    private static final String INPUT_FILES_PATH = "./src/resources/input/";
-    //    private static final String INPUT_FILES_PATH = "resources/input/";
-    private static final String OUTPUT_FILES_PATH = "./src/resources/output/";
-    //    private static final String OUTPUT_FILES_PATH = "resources/output/";
+//    private static final String INPUT_FILES_PATH = "./src/resources/input/";
+        private static final String INPUT_FILES_PATH = "resources/input/";
+//    private static final String OUTPUT_FILES_PATH = "./src/resources/output/";
+        private static final String OUTPUT_FILES_PATH = "resources/output/";
     private static int p;
     private static int withThreads;
     private static String MATRIX_INPUT_FILENAME;
@@ -23,28 +24,31 @@ public class Main extends Utils {
 
     public static void main(String[] args) throws InterruptedException {
 
-//        p = Integer.parseInt(args[1]);
-//        withThreads = Integer.parseInt(args[2]);
-//        MATRIX_INPUT_FILENAME = args[3];
-//        MATRIX_OUTPUT_FILENAME = args[4];
-//        TEST_MATRIX_FILENAME = args[5];
-//        KERNEL_FILENAME = args[6];
-//        N = Integer.parseInt(args[7]);
-//        M = Integer.parseInt(args[8]);
-//        n = Integer.parseInt(args[9]);
-//        m = Integer.parseInt(args[10]);
+        p = Integer.parseInt(args[1]);
+        withThreads = Integer.parseInt(args[2]);
+        MATRIX_INPUT_FILENAME = args[3];
+        MATRIX_OUTPUT_FILENAME = args[4];
+        TEST_MATRIX_FILENAME = args[5];
+        KERNEL_FILENAME = args[6];
+        N = Integer.parseInt(args[7]);
+        M = Integer.parseInt(args[8]);
+        n = Integer.parseInt(args[9]);
+        m = Integer.parseInt(args[10]);
 
-        p = 4;
-        cyclicBarrier = new CyclicBarrier(p);
-        withThreads = 1;
-        MATRIX_INPUT_FILENAME = "testMatrix.txt";
-        MATRIX_OUTPUT_FILENAME = "testMatrixWith0Threads.txt";
-        TEST_MATRIX_FILENAME = "testMatrixWith0Threads.txt";
-        KERNEL_FILENAME = "testKernel5.txt";
-        N = 6;
-        M = 6;
-        n = 5;
-        m = 5;
+//        p = 4;
+//        withThreads = 1;
+//        MATRIX_INPUT_FILENAME = "testMatrix.txt";
+//        MATRIX_OUTPUT_FILENAME = "testMatrixWith0Threads.txt";
+//        TEST_MATRIX_FILENAME = "testMatrixWith0Threads.txt";
+//        KERNEL_FILENAME = "testKernel.txt";
+//        N = 6;
+//        M = 6;
+//        n = 3;
+//        m = 3;
+
+        if(p > 0){
+            cyclicBarrier = new CyclicBarrier(p);
+        }
 
         kernel = ReadMatrix.read(n, m, INPUT_FILES_PATH + KERNEL_FILENAME);
         matrix = ReadMatrix.read(N, M, INPUT_FILES_PATH + MATRIX_INPUT_FILENAME);
@@ -71,48 +75,71 @@ public class Main extends Utils {
     private static void sequentially() {
         double[][] temp;
         if (N >= M) {
-            // init temp - fill with first line
+            // copy start lines
             temp = new double[n / 2 + 1][M];
             for (int i = 0; i < n / 2 + 1; i++) {
                 System.arraycopy(matrix[0], 0, temp[i], 0, M);
             }
 
-            // start convolution on lines
+            // copy end line
+            double[] tempEnd = new double[N];
+            System.arraycopy(matrix[N - 1], 0, tempEnd, 0, M);
+
             for (int i = 0; i < N; i++) {
+
+                double[] currentLine = new double[M];
+                System.arraycopy(matrix[i], 0, temp[n / 2], 0, M);
+                System.arraycopy(matrix[i], 0, currentLine, 0, M);
+
+                // apply convolution on line
+                for (int j = 0; j < M; j++) {
+                    matrix[i][j] = Utils.applyConvolutionOnLines(matrix, temp, tempEnd, kernel, N, M, n, m, i, j);
+                }
+
+                System.arraycopy(currentLine, 0, temp[n / 2], 0, M);
+
                 // move lines
                 for (int k = 1; k < n / 2 + 1; k++) {
                     System.arraycopy(temp[k], 0, temp[k - 1], 0, M);
                 }
-                // save new line
-                System.arraycopy(matrix[i], 0, temp[n / 2], 0, M);
-
-                // apply convolution on line
-                for (int j = 0; j < M; j++) {
-                    matrix[i][j] = Utils.applyConvolutionOnLines(matrix, temp, kernel, N, M, n, m, i, j);
-                }
             }
         } else {
-            // init temp - fill with first column
+            // copy start columns
             temp = new double[N][m / 2 + 1];
             for(int j = 0; j < m / 2 + 1; j++){
                 for(int i = 0; i < N; i++){
                     temp[i][j] = matrix[i][0];
                 }
             }
+
+            // copy end column
+            double[][] tempEnd = new double[N][1];
+            for (int i = 0; i < N; i++) {
+                tempEnd[i][0] = matrix[i][M - 1];
+            }
+
             // start convolution on columns
-            for (int j = 0; j < M; j++){
-                // move columns
-                for (int k = 0; k < N; k++) {
-                    System.arraycopy(temp[k], 1, temp[k], 0, m / 2);
-                }
-                // save new column
-                for(int k = 0; k < N; k++){
-                    temp[k][m / 2] = matrix[k][j];
+            for (int j = 0; j < M; j++) {
+
+                double[][] currentColumn = new double[N][1];
+
+                for (int i = 0; i < N; i++) {
+                    temp[i][m / 2] = matrix[i][j];
+                    currentColumn[i][0] = matrix[i][j];
                 }
 
                 // apply convolution on columns
                 for (int i = 0; i < N; i++) {
-                    matrix[i][j] = Utils.applyConvolutionOnColumns(matrix, temp, kernel, N, M, n, m, i, j);
+                    matrix[i][j] = Utils.applyConvolutionOnColumns(matrix, temp, tempEnd, kernel, N, M, n, m, i, j);
+                }
+
+                for (int i = 0; i < N; i++) {
+                    temp[i][m / 2] = currentColumn[i][0];
+                }
+
+                // move columns
+                for (int k = 0; k < N; k++) {
+                    System.arraycopy(temp[k], 1, temp[k], 0, m / 2);
                 }
             }
         }
@@ -169,7 +196,7 @@ public class Main extends Utils {
         double[][] actualOutput = ReadMatrix.read(N, M, OUTPUT_FILES_PATH + MATRIX_OUTPUT_FILENAME);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (actualOutput[i][j] != realOutput[i][j]) {
+                if (abs(actualOutput[i][j] - realOutput[i][j]) > 1) {
                     System.out.println("Invalid result at line: " + i + " and column: " + j);
                     System.out.println("Actual value: " + actualOutput[i][j]);
                     System.out.println("Real value: " + realOutput[i][j]);

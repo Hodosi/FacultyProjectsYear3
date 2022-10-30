@@ -63,39 +63,71 @@ public class Convolution extends Thread {
                     matrix[i][j] = this.applyConvolutionOnLines(i, j);
                 }
 
-                System.arraycopy(currentLine, 0, tempStart[n/2], 0, M);
+                System.arraycopy(currentLine, 0, tempStart[n / 2], 0, M);
 
                 // move lines
                 for (int k = 1; k < n / 2 + 1; k++) {
                     System.arraycopy(tempStart[k], 0, tempStart[k - 1], 0, M);
                 }
             }
+        } else {
+            // init temps
+            tempStart = new double[N][m / 2 + 1];
+            tempEnd = new double[N][m / 2 + 1];
+
+            // copy start columns
+            for (int j = colStart; j < colStart + m / 2 + 1; j++) {
+                int colCopy = j - m / 2;
+                if (colCopy < 0) {
+                    colCopy = 0;
+                }
+                for (int i = 0; i < N; i++) {
+                    tempStart[i][j - colStart] = matrix[i][colCopy];
+                }
+            }
+
+            // copy end columns
+            for (int j = colEnd - 1; j < colEnd + m / 2; j++) {
+                int colCopy = j;
+                if (colCopy > M - 1) {
+                    colCopy = M - 1;
+                }
+                for (int i = 0; i < N; i++) {
+                    tempEnd[i][j - colEnd + 1] = matrix[i][colCopy];
+                }
+            }
+
+            try {
+                Main.cyclicBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                throw new RuntimeException(e);
+            }
+
+            // start convolution on columns
+            for (int j = colStart; j < colEnd; j++) {
+
+                double[][] currentColumn = new double[N][1];
+
+                for (int i = 0; i < N; i++) {
+                    tempStart[i][m / 2] = matrix[i][j];
+                    currentColumn[i][0] = matrix[i][j];
+                }
+
+                // apply convolution on columns
+                for (int i = linStart; i < linEnd; i++) {
+                    matrix[i][j] = this.applyConvolutionOnColumns(i, j);
+                }
+
+                for (int i = 0; i < N; i++) {
+                    tempStart[i][m / 2] = currentColumn[i][0];
+                }
+
+                // move columns
+                for (int k = 0; k < N; k++) {
+                    System.arraycopy(tempStart[k], 1, tempStart[k], 0, m / 2);
+                }
+            }
         }
-//        } else {
-//            // init temp - fill with first column
-//            temp = new double[N][m / 2 + 1];
-//            for(int j = 0; j < m / 2 + 1; j++){
-//                for(int i = linStart; i < linEnd; i++){
-//                    temp[i][j] = matrix[i][colStart];
-//                }
-//            }
-//            // start convolution on columns
-//            for (int j = 0; j < M; j++){
-//                // move columns
-//                for (int k = 0; k < N; k++) {
-//                    System.arraycopy(temp[k], 1, temp[k], 0, m / 2);
-//                }
-//                // save new column
-//                for(int k = 0; k < N; k++){
-//                    temp[k][m / 2] = matrix[k][j];
-//                }
-//
-//                // apply convolution on columns
-//                for (int i = 0; i < N; i++) {
-//                    matrix[i][j] = this.applyConvolutionOnColumns(matrix, temp, kernel, N, M, n, m, i, j);
-//                }
-//            }
-//        }
     }
 
     public double applyConvolutionOnLines(final int linMatrix, final int colMatrix) {
@@ -116,9 +148,7 @@ public class Convolution extends Thread {
             }
         }
 
-//        convolutionResult += applyConvolution(n/2 + 1, 0 ,linMatrix, colMatrix);
-
-        for (linKernel = n/2 + 1; linKernel < n; linKernel++) {
+        for (linKernel = n / 2 + 1; linKernel < n; linKernel++) {
             for (colKernel = 0; colKernel < m; colKernel++) {
                 int linConvolution = linMatrix + linKernel - n / 2;
                 int colConvolution = colMatrix + colKernel - m / 2;
@@ -132,65 +162,55 @@ public class Convolution extends Thread {
 
                 if (linConvolution >= linEnd - 1) {
                     convolutionResult += tempEnd[linConvolution - linEnd + 1][colConvolution] * kernel[linKernel][colKernel];
-                }
-                else{
+                } else {
                     convolutionResult += matrix[linConvolution][colConvolution] * kernel[linKernel][colKernel];
                 }
-
             }
         }
 
         return convolutionResult;
     }
 
-//    public double applyConvolutionOnColumns(final double[][] matrix, final double[][] temp, final double[][] kernel, final int N, final int M, final int n, final int m, final int linMatrix, final int colMatrix) {
-//        double convolutionResult = 0;
-//        int linKernel, colKernel;
-//        for (linKernel = 0; linKernel < n; linKernel++) {
-//            for (colKernel = 0; colKernel < m / 2 + 1; colKernel++) {
-//                int linConvolution = linMatrix + linKernel - n / 2;
-//
-//                if (linConvolution < 0) {
-//                    linConvolution = 0;
-//                }
-//
-//                if (linConvolution >= N) {
-//                    linConvolution = N - 1;
-//                }
-//
-//                convolutionResult += temp[linConvolution][colKernel] * kernel[linKernel][colKernel];
-//            }
-//        }
-//
-//        convolutionResult += applyConvolution(matrix, temp, kernel, N, M, n, m, 0, m / 2 + 1 ,linMatrix, colMatrix);
-//
-//        return convolutionResult;
-//    }
-
-    public double applyConvolution(final int nStart, final int mStart ,final int linMatrix, final int colMatrix) {
+    public double applyConvolutionOnColumns(final int linMatrix, final int colMatrix) {
         double convolutionResult = 0;
         int linKernel, colKernel;
-        for (linKernel = nStart; linKernel < n; linKernel++) {
-            for (colKernel = mStart; colKernel < m; colKernel++) {
+        for (linKernel = 0; linKernel < n; linKernel++) {
+            for (colKernel = 0; colKernel < m / 2 + 1; colKernel++) {
+                int linConvolution = linMatrix + linKernel - n / 2;
+
+                if (linConvolution < 0) {
+                    linConvolution = 0;
+                }
+
+                if (linConvolution >= N) {
+                    linConvolution = N - 1;
+                }
+
+                convolutionResult += tempStart[linConvolution][colKernel] * kernel[linKernel][colKernel];
+            }
+        }
+
+        for (linKernel = 0; linKernel < n; linKernel++) {
+            for (colKernel = m / 2 + 1; colKernel < m; colKernel++) {
                 int linConvolution = linMatrix + linKernel - n / 2;
                 int colConvolution = colMatrix + colKernel - m / 2;
 
                 if (linConvolution < 0) {
                     linConvolution = 0;
                 }
-                if (colConvolution < 0) {
-                    colConvolution = 0;
-                }
+
                 if (linConvolution >= N) {
                     linConvolution = N - 1;
                 }
-                if (colConvolution >= M) {
-                    colConvolution = M - 1;
-                }
 
-                convolutionResult += matrix[linConvolution][colConvolution] * kernel[linKernel][colKernel];
+                if (colConvolution >= colEnd - 1) {
+                    convolutionResult += tempEnd[linConvolution][colConvolution - colEnd + 1] * kernel[linKernel][colKernel];
+                } else {
+                    convolutionResult += matrix[linConvolution][colConvolution] * kernel[linKernel][colKernel];
+                }
             }
         }
+
         return convolutionResult;
     }
 }
