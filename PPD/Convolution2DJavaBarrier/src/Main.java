@@ -2,7 +2,7 @@ import java.util.concurrent.CyclicBarrier;
 
 import static java.lang.Math.abs;
 
-public class Main extends Utils {
+public class Main extends WriteMatrix {
 //    private static final String INPUT_FILES_PATH = "./src/resources/input/";
         private static final String INPUT_FILES_PATH = "resources/input/";
 //    private static final String OUTPUT_FILES_PATH = "./src/resources/output/";

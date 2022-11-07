@@ -28,26 +28,23 @@ int n;
 int m;
 double kernelStatic[5][5];
 double matrixStatic[MAX][MAX];
+double resultMatrixStatic[MAX][MAX];
 
-class my_barrier
-{
+class my_barrier {
 public:
-    my_barrier(int count) : thread_count(count), counter(0), waiting(0)
-    {}
+    my_barrier(int count) : thread_count(count), counter(0), waiting(0) {}
 
     int thread_count;
 
-    void wait()
-    {
+    void wait() {
         //fence mechanism
         std::unique_lock<std::mutex> lk(m);
         ++counter;
         ++waiting;
-        cv.wait(lk, [&]{return counter >= thread_count;});
+        cv.wait(lk, [&] { return counter >= thread_count; });
         cv.notify_one();
         --waiting;
-        if(waiting == 0)
-        {  //reset barrier
+        if (waiting == 0) {  //reset barrier
             counter = 0;
         }
         lk.unlock();
@@ -87,15 +84,23 @@ void ReadMatrix_readStatic(bool inputMatrix) {
     ifstream fin;
     if (inputMatrix) {
         fin.open(INPUT_FILES_PATH + MATRIX_INPUT_FILENAME);
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                fin >> matrixStatic[i][j];
+            }
+        }
     } else {
         fin.open(OUTPUT_FILES_PATH + TEST_MATRIX_FILENAME);
-    }
 
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            fin >> matrixStatic[i][j];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                fin >> resultMatrixStatic[i][j];
+            }
         }
     }
+
     fin.close();
 }
 
@@ -213,8 +218,14 @@ void sequentially(int linStart, int linEnd, int colStart, int colEnd) {
     if (N >= M) {
 
         // init temps
-        double tempStart[n / 2 + 1][MAX];
-        double tempEnd[n / 2 + 1][MAX];
+//        double tempStart[n / 2 + 1][MAX];
+//        double tempEnd[n / 2 + 1][MAX];
+
+//        double tempStart[MAX_KERNEL / 2 + 1][MAX];
+//        double tempEnd[MAX_KERNEL / 2 + 1][MAX];
+
+        auto tempStart = new double [n / 2 + 1][MAX];
+        auto tempEnd = new double [n / 2 + 1][MAX];
 
         // copy start lines
         for (int i = linStart; i < linStart + n / 2 + 1; i++) {
@@ -247,7 +258,9 @@ void sequentially(int linStart, int linEnd, int colStart, int colEnd) {
 
         for (int i = linStart; i < linEnd; i++) {
 
-            double currentLine[M];
+//            double currentLine[M];
+//            double currentLine[MAX];
+            auto currentLine = new double[M];
 //            System.arraycopy(matrix[i], 0, temp[n / 2], 0, M);
 //            System.arraycopy(matrix[i], 0, currentLine, 0, M);
             for (int j = 0; j < M; j++) {
@@ -274,8 +287,14 @@ void sequentially(int linStart, int linEnd, int colStart, int colEnd) {
         }
     } else {
         // copy start columns
-        double tempStart[N][MAX_KERNEL];
-        double tempEnd[N][MAX_KERNEL];
+//        double tempStart[N][MAX_KERNEL];
+//        double tempEnd[N][MAX_KERNEL];
+
+//        double tempStart[MAX][MAX_KERNEL];
+//        double tempEnd[MAX][MAX_KERNEL];
+
+        auto tempStart = new double [N][MAX_KERNEL];
+        auto tempEnd = new double [N][MAX_KERNEL];
 
         // copy start columns
         for (int j = colStart; j < colStart + m / 2 + 1; j++) {
@@ -304,7 +323,9 @@ void sequentially(int linStart, int linEnd, int colStart, int colEnd) {
 
         // start convolution on columns
         for (int j = colStart; j < colEnd; j++) {
-            double currentColumn[N][1];
+//            double currentColumn[N][1];
+//            double currentColumn[MAX][1];
+            auto currentColumn = new double [N][1];
 
             for (int i = 0; i < N; i++) {
                 tempStart[i][m / 2] = matrixStatic[i][j];
@@ -377,18 +398,18 @@ void parallel() {
     }
 }
 
-//void testResult() {
-//    ReadMatrix_readStatic(false);
-//    for (int i = 0; i < N; i++) {
-//        for (int j = 0; j < M; j++) {
-//            if (abs(resultMatrixStatic[i][j] - matrixStatic[i][j]) > 1) {
-//                cout << "Invalid result at line: " << i << " and column: " << j << "\n";
-//                cout << "Actual value: " << resultMatrixStatic[i][j] << "\n";
-//                cout << "Real value: " << matrixStatic[i][j] << "\n";
-//            }
-//        }
-//    }
-//}
+void testResult() {
+    ReadMatrix_readStatic(false);
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            if (abs(resultMatrixStatic[i][j] - matrixStatic[i][j]) > 1) {
+                cout << "Invalid result at line: " << i << " and column: " << j << "\n";
+                cout << "Actual value: " << resultMatrixStatic[i][j] << "\n";
+                cout << "Real value: " << matrixStatic[i][j] << "\n";
+            }
+        }
+    }
+}
 
 int main(int argc, char *argv[]) {
     p = 4;
@@ -402,24 +423,22 @@ int main(int argc, char *argv[]) {
     n = 3;
     m = 3;
 
-//    my_barrier barrier(p);
-//    barrier = new my_barrier (p);
-
-//    p = strtol(argv[1], NULL, 10);
-//    withThreads = strtol(argv[2], NULL, 10);;
-//    MATRIX_INPUT_FILENAME = argv[3];
-//    MATRIX_OUTPUT_FILENAME = argv[4];
-//    TEST_MATRIX_FILENAME = argv[5];
-//    KERNEL_FILENAME = argv[6];
-//    N = strtol(argv[7], NULL, 10);
-//    M = strtol(argv[8], NULL, 10);
-//    n = strtol(argv[9], NULL, 10);
-//    m = strtol(argv[10], NULL, 10);
-
+/*
+    p = strtol(argv[1], NULL, 10);
+    withThreads = strtol(argv[2], NULL, 10);;
+    MATRIX_INPUT_FILENAME = argv[3];
+    MATRIX_OUTPUT_FILENAME = argv[4];
+    TEST_MATRIX_FILENAME = argv[5];
+    KERNEL_FILENAME = argv[6];
+    N = strtol(argv[7], NULL, 10);
+    M = strtol(argv[8], NULL, 10);
+    n = strtol(argv[9], NULL, 10);
+    m = strtol(argv[10], NULL, 10);
+*/
     ReadKernel_readStatic();
-    PrintKernel_print();
+//    PrintKernel_print();
     ReadMatrix_readStatic(true);
-    PrintMatrix_print();
+//    PrintMatrix_print();
 
     auto startTime = chrono::high_resolution_clock::now();
 
@@ -433,7 +452,7 @@ int main(int argc, char *argv[]) {
 
     WriteMatrix_write();
 
-//    testResult();
+    testResult();
 
     double duration = chrono::duration<double, milli>(endTime - startTime).count();
     cout << duration;

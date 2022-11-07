@@ -1,0 +1,6 @@
+﻿  main.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 325 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Convo.vcxproj -> C:\UserDisk\FacultyProjectsYear3\PPD\Convolution2DcppBarrierVS\Convo\x64\Release\Convo.exe

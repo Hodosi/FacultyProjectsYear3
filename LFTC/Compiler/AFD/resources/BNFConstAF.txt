@@ -1,0 +1,9 @@
+BNF
+AFD ::= <lista_stari><lista_stari_initiale><lista_stari_finale><alfabet><lista_tranzitii>
+<lista_stari> ::= <stare> | <lista_stari>
+<lista_stari_initiale> ::= <stare> | <lista_stari_initiale>
+<lista_stari_finale> ::= <stare> | <lista_stari_finale>
+<alfabet> ::= <element_alfabet> | <alfabet>
+<lista_tranzitii> ::= <stare_initiala> <element_alfabet> <stare_finala> | <lista_tranzitii>
+<stare> ::= i | z | p | n | c | d | f
+<element_alfabet> ::= - | + | . | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9

@@ -1,0 +1,30 @@
+1) N=M=10 si n=m=3; p=2;
+    .\scriptC.ps1 Convo 0 0 matrix10pe10.txt matrix10pe10With0Threads.txt matrix10pe10With0Threads.txt matrix3pe3.txt 10 10 3 3 0 15
+    .\scriptC.ps1 Convo 2 1 matrix10pe10.txt matrix10pe10With2Threads.txt matrix10pe10With0Threads.txt matrix3pe3.txt 10 10 3 3 0 15
+
+ 2) N=M=1000 si n=m=5; p=1,2,4,8,16
+
+	     .\scriptC.ps1 Convo 0 0 matrix1000pe1000.txt matrix1000pe1000With0Threads.txt matrix1000pe1000With0Threads.txt matrix5pe5.txt 1000 1000 5 5 0 15
+    .\scriptC.ps1 Convo 1 1 matrix1000pe1000.txt matrix1000pe1000With2Threads.txt matrix1000pe1000With0Threads.txt matrix5pe5.txt 1000 1000 5 5 0 15
+    .\scriptC.ps1 Convo 2 1 matrix1000pe1000.txt matrix1000pe1000With2Threads.txt matrix1000pe1000With0Threads.txt matrix5pe5.txt 1000 1000 5 5 0 15
+    .\scriptC.ps1 Convo 4 1 matrix1000pe1000.txt matrix1000pe1000With4Threads.txt matrix1000pe1000With0Threads.txt matrix5pe5.txt 1000 1000 5 5 0 15
+    .\scriptC.ps1 Convo 8 1 matrix1000pe1000.txt matrix1000pe1000With8Threads.txt matrix1000pe1000With0Threads.txt matrix5pe5.txt 1000 1000 5 5 0 15
+    .\scriptC.ps1 Convo 16 1 matrix1000pe1000.txt matrix1000pe1000With16Threads.txt matrix1000pe1000With0Threads.txt matrix5pe5.txt 1000 1000 5 5 0 15
+
+3) N=10 M=10000 si n=m=5; p=1,2,4,8,16
+
+	    .\scriptC.ps1 Convo 0 0 matrix10pe10000.txt matrix10pe10000With0Threads.txt matrix10pe10000With0Threads.txt matrix5pe5.txt 10 10000 5 5 0 15
+    .\scriptC.ps1 Convo 1 1 matrix10pe10000.txt matrix10pe10000With2Threads.txt matrix10pe10000With0Threads.txt matrix5pe5.txt 10 10000 5 5 0 15
+    .\scriptC.ps1 Convo 2 1 matrix10pe10000.txt matrix10pe10000With2Threads.txt matrix10pe10000With0Threads.txt matrix5pe5.txt 10 10000 5 5 0 15
+    .\scriptC.ps1 Convo 4 1 matrix10pe10000.txt matrix10pe10000With4Threads.txt matrix10pe10000With0Threads.txt matrix5pe5.txt 10 10000 5 5 0 15
+    .\scriptC.ps1 Convo 8 1 matrix10pe10000.txt matrix10pe10000With8Threads.txt matrix10pe10000With0Threads.txt matrix5pe5.txt 10 10000 5 5 0 15
+    .\scriptC.ps1 Convo 16 1 matrix10pe10000.txt matrix10pe10000With16Threads.txt matrix10pe10000With0Threads.txt matrix5pe5.txt 10 10000 5 5 0 15
+
+4) N=10000 M=10 si n=m=5; p=1,2,4,8,16
+
+	    .\scriptC.ps1 Convo 0 0 matrix10000pe10.txt matrix10000pe10With0Threads.txt matrix10000pe10With0Threads.txt matrix5pe5.txt 10000 10 5 5 0 15
+    .\scriptC.ps1 Convo 1 1 matrix10000pe10.txt matrix10000pe10With2Threads.txt matrix10000pe10With0Threads.txt matrix5pe5.txt 10000 10 5 5 0 15
+    .\scriptC.ps1 Convo 2 1 matrix10000pe10.txt matrix10000pe10With2Threads.txt matrix10000pe10With0Threads.txt matrix5pe5.txt 10000 10 5 5 0 15
+    .\scriptC.ps1 Convo 4 1 matrix10000pe10.txt matrix10000pe10With4Threads.txt matrix10000pe10With0Threads.txt matrix5pe5.txt 10000 10 5 5 0 15
+    .\scriptC.ps1 Convo 8 1 matrix10000pe10.txt matrix10000pe10With8Threads.txt matrix10000pe10With0Threads.txt matrix5pe5.txt 10000 10 5 5 0 15
+    .\scriptC.ps1 Convo 16 1 matrix10000pe10.txt matrix10000pe10With16Threads.txt matrix10000pe10With0Threads.txt matrix5pe5.txt 10000 10 5 5 0 15
