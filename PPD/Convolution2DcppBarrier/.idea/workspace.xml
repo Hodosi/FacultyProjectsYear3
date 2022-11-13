@@ -18,27 +18,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e909899-7e24-4619-84b1-5b701e6f9ae3" name="Changes" comment="Have a nice day!">
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/AFD.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/src/Service.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/AFD/src/UI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/AFD.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/resources/input/ConstAF.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/src/AF.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/src/FileRead.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/src/ServiceAFD.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../LFTC/Compiler/AFD/src/UIAFD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../LFTC/Compiler/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../LFTC/Compiler/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LFTC/Andrei/finite_state_machine.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LFTC/Andrei/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LFTC/Andrei/specificare.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BigNumberGenerator/ID_1_N_1_2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BigNumberGenerator/ID_2_N_1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BigNumberGenerator/ID_2_N_2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BigNumberGenerator/ID_3_N_1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BigNumberGenerator/ID_3_N_2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BigNumberGenerator/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PDM/IonicApp" beforeDir="false" afterPath="$PROJECT_DIR$/../../PDM/IonicApp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PDM/NodeServer" beforeDir="false" afterPath="$PROJECT_DIR$/../../PDM/NodeServer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Convolution2DJavaBarrier/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Convolution2DJavaBarrier/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Convolution2Dcpp/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Convolution2Dcpp/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +91,7 @@
       <workItem from="1667151037008" duration="10845000" />
       <workItem from="1667324788470" duration="4763000" />
       <workItem from="1667384591892" duration="1573000" />
+      <workItem from="1668343211707" duration="2597000" />
     </task>
     <task id="LOCAL-00001" summary="Have a nice day!">
       <created>1667161641035</created>

@@ -1,0 +1,2 @@
+﻿  BigSum.cpp
+C:\UserDisk\FacultyProjectsYear3\PPD\BigSum\BigSum\BigSum\BigSum.cpp(7,10): fatal  error C1083: Cannot open include file: 'mpi.h': No such file or directory

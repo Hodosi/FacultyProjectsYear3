@@ -1,0 +1,4 @@
+﻿  V2.cpp
+C:\UserDisk\FacultyProjectsYear3\PPD\BigSum\BigSum\V2\V2.cpp(18,12): warning C4101: 'x': unreferenced local variable
+C:\UserDisk\FacultyProjectsYear3\PPD\BigSum\BigSum\V2\V2.cpp(31,12): warning C4101: 'x': unreferenced local variable
+  V2.vcxproj -> C:\UserDisk\FacultyProjectsYear3\PPD\BigSum\BigSum\x64\Debug\V2.exe
