@@ -2,7 +2,9 @@ import java.util.Scanner;
 
 public class UIAFD {
 //    private final String INPUT_FILE_RULES = "./AFD/resources/input/ConstAF.txt";
-    private final String INPUT_FILE_RULES = "./AFD/resources/input/AAAA.txt";
+//    private final String INPUT_FILE_RULES = "./AFD/resources/input/AAAA.txt";
+//    private final String INPUT_FILE_RULES = "./AFD/resources/input/IdentifAF.txt";
+    private final String INPUT_FILE_RULES = "./AFD/resources/input/KeywordAF.txt";
     private final Scanner scanner = new Scanner(System.in);
     private final ServiceAFD serviceAFD;
 
@@ -11,6 +13,7 @@ public class UIAFD {
     }
 
     public void run() {
+        String __ = "";
         showInitOptions();
 
         String sysInputLine = scanner.nextLine();

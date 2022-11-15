@@ -12,7 +12,7 @@ string INPUT_NR_1 = "C:\\UserDisk\\FacultyProjectsYear3\\PPD\\BigSum\\BigSum\\Bi
 string INPUT_NR_2 = "C:\\UserDisk\\FacultyProjectsYear3\\PPD\\BigSum\\BigSum\\BigSum\\Numar2.txt";
 string OUTPUT_NR_3 = "C:\\UserDisk\\FacultyProjectsYear3\\PPD\\BigSum\\BigSum\\BigSum\\Numar3.txt";
 
-#define MAX 18
+#define MAX 100000
 
 void readN1(short a[], int MAX_LOCAL) {
     int n, x;
@@ -59,6 +59,8 @@ void suma(short a[], short b[], short c[]) {
 
 int main()
 {
+    auto startTime = chrono::high_resolution_clock::now();
+
     int MAX_LOCAL = MAX;
     int id, nr_procese, nr_elem = 0;
     int rc = MPI_Init(NULL, NULL);
@@ -71,7 +73,7 @@ int main()
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &nr_procese);
 
-    printf("Procesul %d din %d", id, nr_procese);
+    // printf("Procesul %d din %d\n", id, nr_procese);
 
     while (MAX_LOCAL % nr_procese)
     {
@@ -120,7 +122,7 @@ int main()
     }
     
     c[MAX] = 0;
-    cout << "\ncarry " << carry << "\n";
+    // cout << "\ncarry " << carry << "\n";
     if (carry) {
         if (id == 0) {
             c[MAX] = carry;
@@ -130,10 +132,15 @@ int main()
         }
     }
 
-    printf(" id = %d; nr_elem = %d", id, nr_elem);
+    // printf(" id = %d; nr_elem = %d", id, nr_elem);
 
     MPI_Gather(c_local, nr_elem, MPI_SHORT, c, nr_elem, MPI_SHORT, 0, MPI_COMM_WORLD);
+
     if (id == 0) {
+        auto endTime = chrono::high_resolution_clock::now();
+        double duration = chrono::duration<double, milli>(endTime - startTime).count();
+        cout << duration;
+
         writeN3(c);
     }    
 

@@ -1,0 +1,9 @@
+FiniteStateMachine
+
+List<String> lines : descrierea state machine ului
+List<String> alphabet : alfabetul
+List<String> initial_state : staturile initiale
+List<String> final_state : staturile finarile
+List<Sting> states : stateurile
+List<List<String> transitions : tranzitiile
+

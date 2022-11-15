@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AFD/AFD.iml" filepath="$PROJECT_DIR$/AFD/AFD.iml" />
       <module fileurl="file://$PROJECT_DIR$/Compiler.iml" filepath="$PROJECT_DIR$/Compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/Parser/Parser.iml" filepath="$PROJECT_DIR$/Parser/Parser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParserAFD/ParserAFD.iml" filepath="$PROJECT_DIR$/ParserAFD/ParserAFD.iml" />
     </modules>
   </component>
 </project>

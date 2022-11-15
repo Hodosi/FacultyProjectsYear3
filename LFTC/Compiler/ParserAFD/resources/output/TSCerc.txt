@@ -1,0 +1,9 @@
+2				0
+3.14				1
+A				2
+Main				3
+P				4
+PI				5
+args				6
+main				7
+r				8

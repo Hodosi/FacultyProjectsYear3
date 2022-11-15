@@ -12,25 +12,11 @@ string INPUT_NR_1 = "C:\\UserDisk\\FacultyProjectsYear3\\PPD\\BigSum\\BigSum\\Bi
 string INPUT_NR_2 = "C:\\UserDisk\\FacultyProjectsYear3\\PPD\\BigSum\\BigSum\\BigSum\\Numar2.txt";
 string OUTPUT_NR_3 = "C:\\UserDisk\\FacultyProjectsYear3\\PPD\\BigSum\\BigSum\\BigSum\\Numar3.txt";
 
-#define MAX 18
+#define MAX 100000
 
 int main()
 {
-    /*
-    short* a = new short[MAX];
-    short* b = new short[MAX];
-    short* c = new short[MAX + 1];
-
     auto startTime = chrono::high_resolution_clock::now();
-    readN1(a);
-    readN2(b);
-    suma(a, b, c);
-    writeN3(c);
-    auto endTime = chrono::high_resolution_clock::now();
-
-    double duration = chrono::duration<double, milli>(endTime - startTime).count();
-    cout << duration;
-    */
 
     int id, nr_procese, nr_elem = 0;
     short* a = new short[MAX];
@@ -47,7 +33,7 @@ int main()
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &nr_procese);
 
-    printf("Procesul %d din %d", id, nr_procese);
+    // printf("Procesul %d din %d\n", id, nr_procese);
 
     if (id == 0) {
         ifstream fin1(INPUT_NR_1);
@@ -121,6 +107,10 @@ int main()
             indexStart = indexEnd;
             id_proces_curent++;
         }
+
+        auto endTime = chrono::high_resolution_clock::now();
+        double duration = chrono::duration<double, milli>(endTime - startTime).count();
+        cout << duration;
 
         ofstream fout(OUTPUT_NR_3);
         for (int i = 0; i <= MAX; i++) {
