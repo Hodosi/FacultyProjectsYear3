@@ -1,0 +1,3 @@
+C:/UserDisk/FacultyProjectsYear3/LFTC/LEX/cmake-build-debug/CMakeFiles/LEX.dir
+C:/UserDisk/FacultyProjectsYear3/LFTC/LEX/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/UserDisk/FacultyProjectsYear3/LFTC/LEX/cmake-build-debug/CMakeFiles/rebuild_cache.dir
