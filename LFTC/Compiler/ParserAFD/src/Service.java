@@ -7,7 +7,7 @@ public class Service {
     private final String TA_FILE_PATH = "./ParserAFD/resources/tables/TA.txt";
 
     private final String INPUT_FILE_RULES_CONST = "./ParserAFD/resources/input/ConstAF.txt";
-    private final String INPUT_FILE_RULES_ID = "./ParserAFD/resources/input/IdAF.txt";
+    private final String INPUT_FILE_RULES_ID = "./ParserAFD/resources/input/IdAF8.txt";
     private final String INPUT_FILE_RULES_KEYWORD= "./ParserAFD/resources/input/KeywordAF.txt";
     public void run() {
         final ArrayList<String> separators = FileRead.loadInputLinesToArrayList(SEPARATORS_FILES_PATH);

@@ -48,7 +48,7 @@ public class Parser {
             if(atom.isEmpty()){
                 final String isId = this.afId.getPrefixMaxim(currentContent);
                 final String isKeyword = this.afKeyword.getPrefixMaxim(currentContent);
-                if(isKeyword.length() > isId.length()){
+                if(isKeyword.length() > isId.length() && isKeyword.contains(".")){
                     atom = isKeyword;
                 }
                 else {
@@ -56,7 +56,7 @@ public class Parser {
                 }
             }
             if(atom.isEmpty()){
-                throw new RuntimeException("Mare error");
+                throw new RuntimeException("Mare error\n a mai ramas de procesat: \n" + currentContent);
             }
             this.parsedFileContent.add(atom);
             currentContent = currentContent.substring(atom.length());

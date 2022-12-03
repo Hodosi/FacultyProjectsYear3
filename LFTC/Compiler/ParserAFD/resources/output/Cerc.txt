@@ -20,6 +20,11 @@ final
 double
 PI
 ;
+double
+abcdefgh
+igklmnop
+qrst
+;
 PI
 =
 3.14

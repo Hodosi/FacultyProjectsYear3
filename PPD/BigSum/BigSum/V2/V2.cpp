@@ -122,13 +122,18 @@ int main()
     }
     
     c[MAX] = 0;
-    // cout << "\ncarry " << carry << "\n";
     if (carry) {
         if (id == 0) {
             c[MAX] = carry;
         }
         else {
-            c_local[0] = c_local[0] + carry;
+            int i = 0;
+            while (carry && i < nr_elem)
+            {
+                c_local[i] = (c_local[i] + carry) % 10;
+                carry = (c_local[i] + carry) / 10;
+                i++;
+            }
         }
     }
 

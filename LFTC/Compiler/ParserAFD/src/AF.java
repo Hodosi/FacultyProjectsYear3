@@ -125,6 +125,10 @@ public class AF {
 
                 boolean foundNewWay = false;
 
+                if(tranzitii.get(stareCurrenta) == null){
+//                    finished = true;
+                    break;
+                }
                 for (final NodeAF nodeAF : tranzitii.get(stareCurrenta)) {
 
                     final List<String> edges = nodeAF.getEdges();

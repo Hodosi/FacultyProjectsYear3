@@ -145,7 +145,12 @@ int main()
             MPI_Recv(&carry, 1, MPI_SHORT, id - 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         }
         if (carry) {
-            c[indexStart] = c[indexStart] + carry;
+            int i = indexStart;
+            while (carry && i < indexStart + nr_elemente)
+            {
+                c[i] = (c[i] + carry) % 10;
+                carry = (c[i] + carry) / 10;
+            }
         }
 
         if (id == nr_procese - 1) {

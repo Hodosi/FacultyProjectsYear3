@@ -1,3 +1,3 @@
-./Parser/resources/input/Cerc.txt
-./Parser/resources/input/CMMDC.txt
-./Parser/resources/input/SumN.txt
+./ParserAFD/resources/input/Cerc.txt
+./ParserAFD/resources/input/CMMDC.txt
+./ParserAFD/resources/input/SumN.txt
