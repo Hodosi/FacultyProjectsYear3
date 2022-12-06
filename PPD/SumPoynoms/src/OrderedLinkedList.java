@@ -34,9 +34,13 @@ public class OrderedLinkedList {
             // delete
             if (previous.coefficient == 0) {
 
+                if (previous.prev == null && current == null) {
+                    head = null;
+                    return;
+                }
                 if (previous.prev == null) {
+                    current.prev = null;
                     head = current;
-                    head.prev = null;
                     return;
                 }
 

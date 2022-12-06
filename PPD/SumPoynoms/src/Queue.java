@@ -1,5 +1,7 @@
+import java.util.LinkedList;
+
 public class Queue {
-    private final int SIZE = 5;
+    private final int SIZE = 100;
     private final Monomial[] items = new Monomial[SIZE];
     private int front, rear;
     private volatile boolean finished = false;
@@ -11,7 +13,7 @@ public class Queue {
 
     public synchronized void finish() {
         this.finished = true;
-        notifyAll();
+        this.notifyAll();
     }
 
     public synchronized void add(Monomial element) {
@@ -48,7 +50,7 @@ public class Queue {
             }
         }
 
-        if (finished) {
+        if (isEmpty() && finished) {
             return null;
         }
 
@@ -76,3 +78,60 @@ public class Queue {
         return front == -1 && rear == 0;
     }
 }
+
+//public class Queue {
+//    private final int SIZE = 10;
+//    private final java.util.Queue<Monomial> queue = new LinkedList<>();
+//    private boolean finished = false;
+//    private int currentSize = 0;
+//
+//    public synchronized void finish() {
+//        this.finished = true;
+//        this.notifyAll();
+//    }
+//
+//    public synchronized void add(Monomial element) {
+//
+//        while (isFull()) {
+//            try {
+//                this.wait();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        queue.add(element);
+//        currentSize++;
+//
+//        this.notifyAll();
+//    }
+//
+//    public synchronized Monomial remove() {
+//
+//        while (isEmpty() && !finished) {
+//            try {
+//                this.wait();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if (isEmpty() && finished) {
+//            return null;
+//        }
+//
+//        final Monomial element = queue.remove();
+//        currentSize--;
+//
+//        this.notifyAll();
+//        return element;
+//    }
+//
+//    private boolean isFull() {
+//        return currentSize == SIZE - 1;
+//    }
+//
+//    private boolean isEmpty() {
+//        return currentSize == 0;
+//    }
+//}

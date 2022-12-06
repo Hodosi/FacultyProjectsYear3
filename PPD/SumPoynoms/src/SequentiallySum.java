@@ -3,56 +3,27 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
+import java.util.Queue;
 
-public class Producer extends Thread {
+public class SequentiallySum {
     private final OrderedLinkedList polynomial;
-    private final Queue queue;
+    private final Queue<Monomial> queue;
     private final List<String> inputFiles;
     private final String outputFile;
-    private final Lock lock;
-    private final Condition finishedCondition;
 
-    private boolean finished;
-
-    public Producer(
-            final OrderedLinkedList polynomial,
-            final Queue queue,
-            final List<String> inputFiles,
-            final String outputFile,
-            final Lock lock,
-            final Condition finishedCondition
-    ) {
-        this.polynomial = polynomial;
-        this.queue = queue;
+    public SequentiallySum(final List<String> inputFiles, final String outputFile) {
         this.inputFiles = inputFiles;
         this.outputFile = outputFile;
-        this.lock = lock;
-        this.finishedCondition = finishedCondition;
-        this.finished = false;
+        this.polynomial = new OrderedLinkedList();
+        this.queue = new LinkedList<>();
     }
 
-    public void finish() {
-        this.finished = true;
-    }
 
-    @Override
-    public void run() {
+    public void run(){
         readFiles();
-        queue.finish();
-        lock.lock();
-        try {
-            while (!finished) {
-                finishedCondition.await();
-            }
-            writeFile();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
+        computeSum();
+        writeFile();
     }
 
     private void readFiles() {
@@ -88,6 +59,13 @@ public class Producer extends Thread {
             }
 
             scanners = activeScanners;
+        }
+    }
+
+    private void computeSum() {
+        while (!queue.isEmpty()) {
+            final Monomial monomial = queue.remove();
+            polynomial.insert(monomial);
         }
     }
 
